@@ -1,0 +1,10 @@
+{
+    "state_file_path": "/state.json",
+    "project_id_min": 1000,
+    "project_id_max": 10000,
+    "metrics_port": ":9090",
+    "containerd_sock": "/run/containerd/containerd.sock",
+    "default_quota_soft": "1g",
+    "default_quota_hard": "1g",
+    "namespace": "k8s.io"
+}

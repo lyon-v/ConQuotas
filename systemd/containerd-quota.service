@@ -1,0 +1,5 @@
+[Unit] Description=Containerd Rootfs Quota Manager After=network.target containerd.service Requires=containerd.service
+
+[Service] ExecStart=/usr/local/bin/containerd-quota --config=/etc/containerd-quota/config.json Restart=always RestartSec=5 KillSignal=SIGTERM TimeoutStopSec=10
+
+[Install] WantedBy=multi-user.target
