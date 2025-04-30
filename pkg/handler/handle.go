@@ -44,7 +44,7 @@ func NewRFSQuota(configPath string) (*RFSQuota, error) {
 	}
 
 	// 初始化项目ID池
-	projectIDPool := xfs.NewProjectIDPool(cfg.ProjectIDMin, cfg.ProjectIDMax)
+	projectIDPool := xfs.NewProjectIDPool(cfg.Project.IDMin, cfg.Project.IDMax)
 
 	// 创建上下文和取消函数
 	ctx, cancel := context.WithCancel(context.Background())
@@ -144,7 +144,7 @@ func (q *RFSQuota) handleTaskCreate(e *events.TaskCreate) error {
 		return err
 	}
 
-	if err := xfs.SetProjectQuotaWithXFSQuota(projID, q.cfg.DefaultQuotaSoft, q.cfg.DefaultQuotaHard); err != nil {
+	if err := xfs.SetProjectQuotaWithXFSQuota(projID, q.cfg.Quota.DefaultSoft, q.cfg.Quota.DefaultSoft); err != nil {
 		q.projectIDPool.Release(projID)
 		return err
 	}
@@ -226,7 +226,7 @@ func (q *RFSQuota) restoreQuota(containerID, upperdir string) error {
 		return err
 	}
 
-	if err := xfs.SetProjectQuotaWithXFSQuota(projID, q.cfg.DefaultQuotaSoft, q.cfg.DefaultQuotaHard); err != nil {
+	if err := xfs.SetProjectQuotaWithXFSQuota(projID, q.cfg.Quota.DefaultSoft, q.cfg.Quota.DefaultHard); err != nil {
 		q.projectIDPool.Release(projID)
 		return err
 	}
